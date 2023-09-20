@@ -4,8 +4,11 @@ install:
 anki:
 	python open_anki.py
 
+publish:
+	python publish.py
+
 build:
 	python build.py
 
-publish:
-	python publish.py
+update: build
+	python update_anki.py

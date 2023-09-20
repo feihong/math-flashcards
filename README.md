@@ -17,4 +17,11 @@ Start Anki but using `anki-data` as the data directory
 
     make anki
 
+Update Anki model templates
+
+    make update
+
 ## Links
+
+- [updateModelTemplates
+  action](https://github.com/FooSoft/anki-connect#updatemodeltemplates)
