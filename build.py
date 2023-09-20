@@ -4,17 +4,13 @@ import re
 
 here = Path(__file__).parent
 src_dir = here / 'src'
-math_dir = src_dir / 'Math'
 build_dir = here / '_build'
 
 if build_dir.exists():
   shutil.rmtree(build_dir)
 build_dir.mkdir()
 
-math_build_dir = build_dir / 'Math'
-math_build_dir.mkdir()
-
-def apply_template(src_file: Path):
+def apply_template(src_file: Path, output_model_dir: Path):
   output = src_file.read_text()
 
   def repl(match):
@@ -24,12 +20,13 @@ def apply_template(src_file: Path):
 
   output = re.sub(r'<!-- INCLUDE:(.*) -->', repl, output)
 
-  output_file = math_build_dir / src_file.name
+  output_file = output_model_dir / src_file.name
   output_file.write_text(output)
   print(f'Generated {output_file}')
 
-
-shutil.copy(math_dir / 'styles.css', math_build_dir)
-apply_template(math_dir / 'back.html')
-apply_template(math_dir / 'front.html')
-shutil.copytree(math_build_dir, build_dir / 'Math Cloze')
+for model in ['Math', 'Math Cloze']:
+  model_dir = src_dir / model
+  output_model_dir = build_dir / model
+  output_model_dir.mkdir()
+  apply_template(model_dir / 'back.html', output_model_dir)
+  apply_template(model_dir / 'front.html', output_model_dir)
