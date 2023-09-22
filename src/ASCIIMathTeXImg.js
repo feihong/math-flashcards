@@ -865,51 +865,5 @@ THE SOFTWARE.
 
   AMinitSymbols();
 
-  function AMTconvert(str) {
-    if (str.length === 0) {
-      return '';
-    }
-
-    const output = [];
-    let i = 0;
-
-    const readExpr = () => {
-      const output = [];
-
-      while (true) {
-        const c = str[i];
-        if (c === undefined) {
-          throw new Error('Expected closing `');
-        } else if (c === '`') {
-          return AMTparseAMtoTeX(output.join(''));
-        } else {
-          output.push(c);
-        }
-        i += 1;
-      }
-    };
-
-    while (true) {
-      const c = str[i];
-      if (c === undefined) {
-        break;
-      } else if (c === '`') {
-        i += 1;
-        const expr = readExpr();
-        output.push('\\(' + expr + '\\)')
-      } else {
-        if (output.length === 0) {
-          output.push(c)
-        } else {
-          output[output.length-1] += c
-        }
-      }
-      i += 1;
-    }
-
-    return output.join('');
-  }
-
   window.AMTparseAMtoTeX = AMTparseAMtoTeX;
-  window.AMTconvert = AMTconvert;
 }

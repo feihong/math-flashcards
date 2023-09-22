@@ -11,6 +11,10 @@
   - Restart Anki
   - Visit http://localhost:8765/ to verify that AnkiConnect is running
 
+Install Qalculate! CLI (optional)
+
+    brew install libqualculate
+
 ## Commands
 
 Start Anki but using `anki-data` as the data directory
@@ -23,5 +27,4 @@ Update Anki model templates
 
 ## Links
 
-- [updateModelTemplates
-  action](https://github.com/FooSoft/anki-connect#updatemodeltemplates)
+- [Qalculate! Manual](https://qalculate.github.io/manual/index.html)
