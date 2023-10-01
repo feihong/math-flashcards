@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AsciiMath Playground</title>
+<title>AsciiMath Playground (Legacy)</title>
 <style>
 .row {
   display: flex;
@@ -28,6 +28,9 @@ window.MathJax = {
   startup: {
     typeset: false,
   },
+  loader: {
+    load: ['input/asciimath', 'output/chtml', 'ui/menu']
+  },
   tex: {
     inlineMath: [
       ['\\(', '\\)'],
@@ -36,17 +39,22 @@ window.MathJax = {
       ['\\[', '\\]'],
     ],
   },
+  asciimath: {
+    delimiters: [['`', '`']]
+  },
   svg: {
     fontCache: 'global',
     displayAlign: 'left',
   }
 };
 </script>
-<script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
-<script type="text/javascript" src="ASCIIMathTeXImg.js"></script>
+<script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+</script>
 </head>
 <body>
-<h1>AsciiMath Playground</h1>
+<h1>AsciiMath Playground (Legacy)</h1>
+This uses built-in AsciiMath support of MathJax
+
 <div class="row">
   <textarea id="input" oninput="handleInput()"></textarea>
   <button onclick="handleClick()">Update URL</button>
@@ -54,13 +62,6 @@ window.MathJax = {
 <div id="results"></div>
 
 <script>
-// Convert AsciiMath chunks to TeX chunks
-function convert(str) {
-  return str
-    .replace(/```([^`]+)```/g, (_match, group1) => '\\[' + window.AMTparseAMtoTeX(group1) + '\\]')
-    .replace(/`([^`]+)`/g, (_match, group1) => '\\(' + window.AMTparseAMtoTeX(group1) + '\\)')
-}
-
 window.addEventListener('load', _evt => {
   const params = new URLSearchParams(window.location.search)
   const input = params.get('v')
@@ -77,7 +78,7 @@ function handleInput(evt) {
   const value = document.getElementById('input').value
 
   const resultsEl = document.getElementById('results')
-  resultsEl.textContent = convert(value)
+  resultsEl.textContent = value
   MathJax.typeset([resultsEl])
 }
 
