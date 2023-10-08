@@ -1,4 +1,4 @@
-anki-data/
+.DS_Store
 _build/
 
 content/ASCIIMathTeXImg.js

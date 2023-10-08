@@ -11,9 +11,22 @@
   - Restart Anki
   - Visit http://localhost:8765/ to verify that AnkiConnect is running
 
-Install Qalculate! CLI (optional)
+Install Qalculate! CLI
 
     brew install libqualculate
+
+Install Go
+
+    asdf plugin add golang
+    asdf install golang latest
+    asdf global golang latest
+
+Install ivy
+
+    go install robpike.io/ivy@latest
+    echo alias ivy=\"rlwrap $(go env GOPATH)/bin/ivy\"
+
+Add the result of the last command to your `~/.zprofile`.
 
 ## Commands
 
@@ -28,3 +41,4 @@ Update Anki model templates
 ## Links
 
 - [Qalculate! Manual](https://qalculate.github.io/manual/index.html)
+- [Ivy docs](https://pkg.go.dev/robpike.io/ivy)
