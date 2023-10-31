@@ -15,18 +15,11 @@ Install Qalculate! CLI
 
     brew install libqualculate
 
-Install Go
+Install Julia
 
-    asdf plugin add golang
-    asdf install golang latest
-    asdf global golang latest
-
-Install ivy
-
-    go install robpike.io/ivy@latest
-    echo alias ivy=\"rlwrap $(go env GOPATH)/bin/ivy\"
-
-Add the result of the last command to your `~/.zprofile`.
+    asdf plugin add julia
+    asdf install julia latest
+    asdf global julia latest
 
 ## Commands
 
@@ -41,4 +34,3 @@ Update Anki model templates
 ## Links
 
 - [Qalculate! Manual](https://qalculate.github.io/manual/index.html)
-- [Ivy docs](https://pkg.go.dev/robpike.io/ivy)
