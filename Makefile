@@ -1,9 +1,6 @@
 install:
 	pip install --requirement requirements.txt
 
-anki:
-	open -a Anki --args -b ~/anki-data
-
 publish:
 	python publish.py
 
