@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AsciiMath Playground</title>
+<title>AsciiMath and LaTeX Playground</title>
 <style>
 .row {
   display: flex;
@@ -13,9 +13,15 @@
   gap: 1em;
 }
 
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}
+
 textarea {
   width: 30em;
-  height: 10em;
+  height: 15em;
   margin-bottom: 1em;
 }
 
@@ -23,6 +29,7 @@ textarea {
   white-space: pre-line;
 }
 </style>
+
 <script>
 window.MathJax = {
   startup: {
@@ -46,10 +53,15 @@ window.MathJax = {
 <script type="text/javascript" src="ASCIIMathTeXImg.js"></script>
 </head>
 <body>
-<h1>AsciiMath Playground</h1>
+<h1>AsciiMath and LaTeX Playground</h1>
 <div class="row">
   <textarea id="input" oninput="handleInput()"></textarea>
-  <button onclick="handleClick()">Update URL</button>
+  <div class="column">
+    <button onclick="handleClick()">Update URL</button>
+    <button onclick="showExamples()">Show examples</button>
+    <a href="http://asciimath.org" target="_blank">AsciiMath reference</a>
+    <a href="https://detexify.kirelabs.org/classify.html" target="_blank">Detextify LaTeX</a>
+  </div>
 </div>
 <div id="results"></div>
 
@@ -87,6 +99,23 @@ function handleClick() {
   params.set('v', btoa(value))
   window.location.search = params.toString()
 }
+
+function showExamples() {
+  const examples = document.getElementById('examples').innerText.trim()
+  document.getElementById('input').value = examples
+  handleInput()
+}
 </script>
+
+<div id="examples" style="display:none">
+Inline AsciiMath: `sum_(i=1)^n 1/x`
+
+Block AsciiMath: ```sum_(i=1)^n 1/x```
+
+Inline LaTeX: \( \lim_{x \to \infty} \frac{1}{x} \)
+
+Block LaTeX: \[ \lim_{x \to \infty} \frac{1}{x} \]
+</div> <!-- examples-->
+
 </body>
 </html>
