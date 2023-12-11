@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LaTeX Playground</title>
+<style>
+.row {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 1em;
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+textarea {
+  width: 30em;
+  height: 11em;
+  margin-bottom: 1em;
+}
+
+#results {
+  white-space: pre-line;
+}
+</style>
+
+<script>
+window.MathJax = {
+  startup: {
+    typeset: false,
+  },
+  tex: {
+    inlineMath: [
+      ['$', '$'],
+    ],
+    displayMath: [
+      ['$$', '$$'],
+    ],
+  },
+  svg: {
+    scale: 1.5,
+    fontCache: 'global',
+    displayAlign: 'left',
+  }
+};
+</script>
+<script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body>
+<h1>LaTeX Playground</h1>
+<div class="row">
+  <textarea id="input" oninput="handleInput()"></textarea>
+  <div class="stack">
+    <button onclick="handleUpdateUrlClick()">Update URL</button>
+    <button onclick="handleViewCheatsheetClick()">View cheatsheet</button>
+  </div>
+</div>
+<div id="results"></div>
+
+<script>
+window.addEventListener('load', _evt => {
+  const params = new URLSearchParams(window.location.search)
+  const input = params.get('v')
+  if (input === null || input === '') {
+    return
+  }
+  const inputEl = document.getElementById('input')
+  inputEl.textContent = atob(input)
+
+  handleInput()
+})
+
+function handleInput() {
+  const value = document.getElementById('input').value
+
+  const resultsEl = document.getElementById('results')
+  resultsEl.textContent = value
+  MathJax.typeset([resultsEl])
+}
+
+function handleUpdateUrlClick() {
+  const value = document.getElementById('input').value
+  const params = new URLSearchParams(window.location.search)
+  params.set('v', btoa(value))
+  window.location.search = params.toString()
+}
+
+function handleViewCheatsheetClick() {
+  document.getElementById('input').value = document.getElementById('cheatsheet').innerText.trim()
+  handleInput()
+}
+</script>
+
+<div id="cheatsheet" style="display:none">
+Multiplication dot: $2 \cdot 4 = 8$
+
+Fraction: $\frac{x-1}{2y}$
+
+Exponent: $x^3 + 3x^{y+1} + 8^\frac{2}{3}$
+
+Subscript: $x_1 + x_2 + \ldots + x_n$
+
+Root: $\sqrt 2 + \sqrt[3]{45+x}$
+</div>
+</body>
+</html>

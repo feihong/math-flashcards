@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+<meta charset="utf-8" >
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AsciiMath Support Page</title>
+</head>
+<body>
+<h1>AsciiMath Support Page</h1>
+AsciiMath preview bookmarklet for Anki Web: <a id="bookmarklet" href="">AsciiMath preview</a>
+
+<p>
+  <a href="playground.html">AsciiMath and LaTeX Playground</a>
+</p>
+<p>
+  <a href="latex-playground.html">LaTeX Playground</a>
+</p>
+
+<h3>Flashcards</h3>
+
+<ul>
+  <li>Math
+    <ul>
+      <li><a href="build/Math/front.html">Front</a></li>
+      <li><a href="build/Math/back.html">Back</a></li>
+    </ul>
+  </li>
+  <li>Math Cloze
+    <ul>
+      <li><a href="build/Math Cloze/front.html">Front</a></li>
+      <li><a href="build/Math Cloze/back.html">Back</a></li>
+    </ul>
+  </li>
+</ul>
+
+<script async>
+async function main() {
+  const response = await fetch('asciimath-preview.js')
+  const code = await response.text()
+  document.getElementById('bookmarklet').href = 'javascript:' + encodeURI(code.trim())
+}
+main()
+</script>
+</body>
+</html>

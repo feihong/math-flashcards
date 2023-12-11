@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AsciiMath and LaTeX Playground</title>
+<style>
+.row {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 1em;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}
+
+textarea {
+  width: 30em;
+  height: 15em;
+  margin-bottom: 1em;
+}
+
+#results {
+  white-space: pre-line;
+}
+</style>
+
+<script>
+window.MathJax = {
+  startup: {
+    typeset: false,
+  },
+  tex: {
+    inlineMath: [
+      ['\\(', '\\)'],
+    ],
+    displayMath: [
+      ['\\[', '\\]'],
+    ],
+  },
+  svg: {
+    fontCache: 'global',
+    displayAlign: 'left',
+  }
+};
+</script>
+<script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<script type="text/javascript" src="ASCIIMathTeXImg.js"></script>
+</head>
+<body>
+<h1>AsciiMath and LaTeX Playground</h1>
+<div class="row">
+  <textarea id="input" oninput="handleInput()"></textarea>
+  <div class="column">
+    <button onclick="handleClick()">Update URL</button>
+    <button onclick="showExamples()">Show examples</button>
+    <a href="http://asciimath.org" target="_blank">AsciiMath reference</a>
+    <a href="https://detexify.kirelabs.org/classify.html" target="_blank">Detextify LaTeX</a>
+  </div>
+</div>
+<div id="results"></div>
+
+<script>
+// Convert AsciiMath chunks to TeX chunks
+function convert(str) {
+  return str
+    .replace(/```([^`]+)```/g, (_match, group1) => '\\[' + window.AMTparseAMtoTeX(group1) + '\\]')
+    .replace(/`([^`]+)`/g, (_match, group1) => '\\(' + window.AMTparseAMtoTeX(group1) + '\\)')
+}
+
+window.addEventListener('load', _evt => {
+  const params = new URLSearchParams(window.location.search)
+  const input = params.get('v')
+  if (input === null || input === '') {
+    return
+  }
+  const inputEl = document.getElementById('input')
+  inputEl.textContent = atob(input)
+
+  handleInput()
+})
+
+function handleInput(evt) {
+  const value = document.getElementById('input').value
+
+  const resultsEl = document.getElementById('results')
+  resultsEl.textContent = convert(value)
+  MathJax.typeset([resultsEl])
+}
+
+function handleClick() {
+  const value = document.getElementById('input').value
+  const params = new URLSearchParams(window.location.search)
+  params.set('v', btoa(value))
+  window.location.search = params.toString()
+}
+
+function showExamples() {
+  const examples = document.getElementById('examples').innerText.trim()
+  document.getElementById('input').value = examples
+  handleInput()
+}
+</script>
+
+<div id="examples" style="display:none">
+Inline AsciiMath: `sum_(i=1)^n 1/x`
+
+Block AsciiMath: ```sum_(i=1)^n 1/x```
+
+Inline LaTeX: \( \lim_{x \to \infty} \frac{1}{x} \)
+
+Block LaTeX: \[ \lim_{x \to \infty} \frac{1}{x} \]
+</div> <!-- examples-->
+
+</body>
+</html>
